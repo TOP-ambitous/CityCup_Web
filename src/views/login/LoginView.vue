@@ -40,6 +40,7 @@
 </template>
 
 <script lang="js">
+
 	export default{
 		name:'login-register',
 		data(){
@@ -65,42 +66,37 @@
 			login() {
 				const self = this;
 				if (self.form.useremail != "" && self.form.userpwd != "") {
-					self.$axios({
+					this.axios({
 						method:'post',
                         // 登录api
-						url: 'http://127.0.0.1:10520/api/user/login',
+						url: 'http://114.132.75.216:9999/users/login',
 						data: {
 							email: self.form.useremail,
 							password: self.form.userpwd
 						}
 					})
 					.then( res => {
-						// switch(res.data){
-						// 	case 0: 
-						// 		alert("登陆成功！");
-						// 		break;
-						// 	case -1:
-						// 		this.emailError = true;
-						// 		break;
-						// 	case 1:
-						// 		this.passwordError = true;
-						// 		break;
-						// }
+						console.log(res.data.message);
+						/*
+							判断返回信息，登陆成功则跳转页面
+							不然alert(message)
+						}*/
 					})
 					.catch( err => {
-						console.log(err);
+						alert(err)
 					})
 				} else{
 					alert("填写不能为空！");
 				}
 			},
+			//需要加入发送验证码后，才可以注册
 			register(){
 				const self = this;
 				if(self.form.username != "" && self.form.useremail != "" && self.form.userpwd != ""){
-					self.$axios({
+					self.axios({
 						method:'post',
                         // 注册api
-						url: 'http://127.0.0.1:10520/api/user/add',
+						url: 'http://114.132.75.216:9999/users/register',
 						data: {
 							username: self.form.username,
 							email: self.form.useremail,
